@@ -45,6 +45,17 @@
         <div style="font-size:0.75rem;color:#ccc;" id="connection-status">Conectando...</div>
     </div>
 
+    <!-- SELECTOR DE PROYECTO -->
+    <div class="section" style="text-align:center;">
+        <label style="font-size:0.9rem;font-weight:600;color:#7dcea0;margin-right:10px;">Proyecto:</label>
+        <select id="proyecto-selector" onchange="cambiarProyecto()" style="width:auto;min-width:200px;display:inline-block;">
+            <option value="proyecto1">Proyecto 1</option>
+            <option value="proyecto2">Proyecto 2</option>
+            <option value="proyecto3">Proyecto 3</option>
+        </select>
+        <button class="btn" onclick="renombrarProyecto()" style="margin-left:10px;padding:5px 12px;font-size:0.72rem;">Renombrar</button>
+    </div>
+
     <!-- METRICAS -->
     <div class="section">
         <div class="section-title">Dashboard de Metricas</div>
@@ -81,14 +92,45 @@ firebase.initializeApp({
 });
 
 const db = firebase.database();
-const sprintsRef = db.ref('sprints');
+let proyectoActual = 'proyecto1';
+let sprintsRef = db.ref(proyectoActual + '/sprints');
+let proyectosRef = db.ref('proyectos_config');
+let listener = null;
+
+// Cargar nombres de proyectos
+proyectosRef.on('value', snap => {
+    const config = snap.val() || {};
+    const select = document.getElementById('proyecto-selector');
+    ['proyecto1','proyecto2','proyecto3'].forEach((p, i) => {
+        select.options[i].textContent = config[p] || ('Proyecto ' + (i+1));
+    });
+});
 
 db.ref('.info/connected').on('value', snap => {
     document.getElementById('connection-status').textContent = snap.val() ? 'Conectado' : 'Sin conexion';
     document.getElementById('connection-status').style.color = snap.val() ? '#7dcea0' : '#ff5252';
 });
 
-sprintsRef.on('value', snap => {
+function cambiarProyecto() {
+    proyectoActual = document.getElementById('proyecto-selector').value;
+    if (listener) sprintsRef.off('value', listener);
+    sprintsRef = db.ref(proyectoActual + '/sprints');
+    listener = sprintsRef.on('value', snap => {
+        const data = snap.val() || {};
+        renderSprints(data);
+        calcularMetricas(data);
+    });
+}
+
+function renombrarProyecto() {
+    const nombre = prompt('Nombre del proyecto:');
+    if (nombre && nombre.trim()) {
+        proyectosRef.child(proyectoActual).set(nombre.trim());
+    }
+}
+
+// Iniciar escucha del proyecto por defecto
+listener = sprintsRef.on('value', snap => {
     const data = snap.val() || {};
     renderSprints(data);
     calcularMetricas(data);
