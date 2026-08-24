@@ -6,56 +6,43 @@
     <title>PM Tracker - ERP Project</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #2a1035, #3d1a4a, #4a1f5c); min-height: 100vh; padding: 15px; color: #e0e0e0; }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0a1628, #132238, #1a2d4a); min-height: 100vh; padding: 15px; color: #ffffff; }
         .container { max-width: 1200px; margin: 0 auto; }
-        h1 { text-align: center; color: #ffcf00; font-size: 1.8rem; margin-bottom: 20px; }
+        h1 { text-align: center; color: #ffffff; font-size: 1.8rem; margin-bottom: 20px; }
         .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-        .logo svg { width: 160px; height: 50px; }
         .section { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
-        .section-title { color: #ffcf00; font-size: 1rem; font-weight: 700; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .section-title:hover { color: #ffe066; }
+        .section-title { color: #7dcea0; font-size: 1rem; font-weight: 700; margin-bottom: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .section-title:hover { color: #a9dfbf; }
         .toggle-icon { transition: transform 0.3s; }
         .toggle-icon.collapsed { transform: rotate(-90deg); }
         .collapsible { overflow: hidden; transition: max-height 0.3s ease; }
         .collapsible.hidden { max-height: 0 !important; padding: 0; }
         table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
-        th { background: rgba(131,55,143,0.25); color: #ffcf00; padding: 8px 6px; text-align: left; font-size: 0.72rem; text-transform: uppercase; border-bottom: 2px solid rgba(131,55,143,0.5); }
-        td { padding: 7px 6px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; }
-        tr:hover { background: rgba(131,55,143,0.1); }
-        input, textarea, select { width: 100%; padding: 5px 8px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.15); background: rgba(61,26,74,0.8); color: #e0e0e0; font-size: 0.75rem; }
+        th { background: rgba(26,45,74,0.6); color: #7dcea0; padding: 8px 6px; text-align: left; font-size: 0.72rem; text-transform: uppercase; border-bottom: 2px solid rgba(125,206,160,0.4); }
+        td { padding: 7px 6px; border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top; color: #ffffff; }
+        tr:hover { background: rgba(125,206,160,0.08); }
+        input, textarea, select { width: 100%; padding: 5px 8px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.15); background: rgba(10,22,40,0.8); color: #ffffff; font-size: 0.75rem; }
         textarea { resize: vertical; min-height: 28px; }
         select { cursor: pointer; }
-        .btn { padding: 8px 16px; border-radius: 6px; border: 1px solid #ffcf00; background: rgba(131,55,143,0.3); color: #ffcf00; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.2s; }
-        .btn:hover { background: rgba(131,55,143,0.6); }
+        .btn { padding: 8px 16px; border-radius: 6px; border: 1px solid #7dcea0; background: rgba(26,45,74,0.5); color: #7dcea0; cursor: pointer; font-size: 0.8rem; font-weight: 600; transition: all 0.2s; }
+        .btn:hover { background: rgba(125,206,160,0.2); }
         .btn-danger { border-color: #ff5252; color: #ff5252; }
         .btn-danger:hover { background: rgba(255,82,82,0.2); }
         .btn-bar { display: flex; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
         .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 15px; }
-        .metric-card { background: rgba(131,55,143,0.15); border: 1px solid rgba(131,55,143,0.3); border-radius: 8px; padding: 12px; text-align: center; }
-        .metric-value { font-size: 1.6rem; font-weight: 700; color: #ffcf00; }
-        .metric-label { font-size: 0.7rem; color: #aaa; margin-top: 4px; }
-        .status-done { color: #00e676; }
-        .status-progress { color: #ffeb3b; }
-        .status-pending { color: #ff5252; }
-        .status-blocked { color: #42a5f5; }
+        .metric-card { background: rgba(26,45,74,0.4); border: 1px solid rgba(125,206,160,0.3); border-radius: 8px; padding: 12px; text-align: center; }
+        .metric-value { font-size: 1.6rem; font-weight: 700; color: #7dcea0; }
+        .metric-label { font-size: 0.7rem; color: #ccc; margin-top: 4px; }
         .sprint-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-        .sprint-dates { font-size: 0.75rem; color: #aaa; }
+        .sprint-dates { font-size: 0.75rem; color: #ccc; }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <div class="logo">
-            <svg viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="7,30 25,14 25,30 7,46" fill="#ffcf00"/>
-                <polygon points="25,14 43,30 25,46 25,30" fill="#e6b800"/>
-                <polygon points="43,30 25,46 43,46" fill="#ffcf00"/>
-                <polygon points="7,30 25,46 7,46" fill="#e6b800"/>
-                <text x="52" y="42" font-family="Arial Black" font-size="30" font-weight="900" fill="#ffcf00">xtrim</text>
-            </svg>
-        </div>
+        <div></div>
         <h1>PM Tracker - ERP</h1>
-        <div style="font-size:0.75rem;color:#aaa;" id="connection-status">Conectando...</div>
+        <div style="font-size:0.75rem;color:#ccc;" id="connection-status">Conectando...</div>
     </div>
 
     <!-- METRICAS -->
@@ -83,7 +70,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-// Firebase config
 firebase.initializeApp({
     apiKey: "AIzaSyDekcmIKIM8DawV8zrdnBP66DPgfbbyJVI",
     authDomain: "pm-tracker-62f75.firebaseapp.com",
@@ -97,13 +83,11 @@ firebase.initializeApp({
 const db = firebase.database();
 const sprintsRef = db.ref('sprints');
 
-// Connection status
 db.ref('.info/connected').on('value', snap => {
     document.getElementById('connection-status').textContent = snap.val() ? 'Conectado' : 'Sin conexion';
-    document.getElementById('connection-status').style.color = snap.val() ? '#00e676' : '#ff5252';
+    document.getElementById('connection-status').style.color = snap.val() ? '#7dcea0' : '#ff5252';
 });
 
-// Listen for sprints
 sprintsRef.on('value', snap => {
     const data = snap.val() || {};
     renderSprints(data);
@@ -111,37 +95,25 @@ sprintsRef.on('value', snap => {
 });
 
 function crearNuevoSprint() {
-    const sprints = [];
     sprintsRef.once('value').then(snap => {
         const data = snap.val() || {};
-        const count = Object.keys(data).length;
-        const num = count + 1;
+        const num = Object.keys(data).length + 1;
         const hoy = new Date();
         const inicio = hoy.toISOString().split('T')[0];
         const fin = new Date(hoy.getTime() + 6*24*60*60*1000).toISOString().split('T')[0];
-
-        const nuevoSprint = {
-            nombre: 'Sprint ' + num,
-            fechaInicio: inicio,
-            fechaFin: fin,
-            tareas: {}
-        };
-        sprintsRef.push(nuevoSprint);
+        sprintsRef.push({ nombre: 'Sprint ' + num, fechaInicio: inicio, fechaFin: fin, tareas: {} });
     });
 }
 
+function actualizarSprint(sprintId, campo, valor) {
+    sprintsRef.child(sprintId).child(campo).set(valor);
+}
+
 function agregarTarea(sprintId) {
-    const tareaRef = sprintsRef.child(sprintId).child('tareas');
-    tareaRef.push({
-        tarea: '',
-        dod: '',
-        responsable: '',
-        fechaCompromiso: '',
-        estado: 'pendiente',
-        dependencias: '',
-        riesgos: '',
-        esBug: false,
-        respPendienteCliente: false
+    sprintsRef.child(sprintId).child('tareas').push({
+        tarea: '', dod: '', responsable: '', fechaCompromiso: '',
+        estado: 'pendiente', dependencias: '', riesgos: '',
+        esBug: false, respPendienteCliente: false
     });
 }
 
@@ -161,6 +133,10 @@ function eliminarSprint(sprintId) {
     }
 }
 
+function actualizarSprint(sprintId, campo, valor) {
+    sprintsRef.child(sprintId).child(campo).set(valor);
+}
+
 function renderSprints(data) {
     const container = document.getElementById('sprints-container');
     const sprintKeys = Object.keys(data).reverse();
@@ -176,7 +152,11 @@ function renderSprints(data) {
         html += '<div class="section-title" onclick="toggleSprint(\'' + key + '\')">';
         html += '<span class="toggle-icon" id="icon-' + key + '"' + (!isFirst ? ' style="transform:rotate(-90deg)"' : '') + '>&#9660;</span> ';
         html += '<span class="sprint-header"><span>' + sprint.nombre + '</span>';
-        html += '<span class="sprint-dates">' + (sprint.fechaInicio || '') + ' al ' + (sprint.fechaFin || '') + '</span></span>';
+        html += '<span class="sprint-dates">';
+        html += '<input type="date" value="' + (sprint.fechaInicio || '') + '" style="width:130px;margin-right:5px;" onchange="actualizarSprint(\'' + key + '\',\'fechaInicio\',this.value)" onclick="event.stopPropagation()">';
+        html += ' al ';
+        html += '<input type="date" value="' + (sprint.fechaFin || '') + '" style="width:130px;margin-left:5px;" onchange="actualizarSprint(\'' + key + '\',\'fechaFin\',this.value)" onclick="event.stopPropagation()">';
+        html += '</span></span>';
         html += '</div>';
         html += '<div class="collapsible" id="body-' + key + '"' + (!isFirst ? ' style="max-height:0;overflow:hidden;"' : '') + '>';
 
@@ -227,7 +207,6 @@ function toggleSprint(key) {
 
 function calcularMetricas(data) {
     let total = 0, completadas = 0, bugs = 0, depAbiertas = 0, riesgosAbiertos = 0, pendCliente = 0;
-
     Object.values(data).forEach(sprint => {
         const tareas = sprint.tareas || {};
         Object.values(tareas).forEach(t => {
@@ -239,7 +218,6 @@ function calcularMetricas(data) {
             if (t.respPendienteCliente) pendCliente++;
         });
     });
-
     const avance = total > 0 ? Math.round((completadas / total) * 100) : 0;
     document.getElementById('m-avance').textContent = avance + '%';
     document.getElementById('m-completadas').textContent = completadas + '/' + total;
